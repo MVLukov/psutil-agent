@@ -1,7 +1,25 @@
-<div class="basic">
-    <p>Hostname: {{ .HostINFO.Hostname }} ({{ .HostINFO.Platform }})</p>
-    <p>CPU: {{ .CPUUsage.ModelName }} ({{ .CPUUsage.Vendor }}), Cores: {{ .CPUUsage.Cores }}/{{.CPUUsage.Threads}}, Usage: {{ printf "%.1f"
-        .CPUUsage.Usage }}%</p>
-    <p>RAM: {{ .RAMUsage.UsedMem }} used / {{ .RAMUsage.TotalMem }} total, Swap used: {{ .RAMUsage.SwapUsed }}</p>
-    
+<div class="flex flex-col bg-zinc-800 my-2 w-100 rounded-sm p-2 shadow-mb text-white opacity-90">
+    <div class="flex flex-row flex-nowrap gap-2 text-sm text-white mb-2">
+        <div class="rounded-sm bg-zinc-600 px-2 text-sm">{{ .HostINFO.Hostname }}</div>
+        <div class="rounded-sm bg-zinc-600 px-2 text-sm">{{.HostINFO.Platform }}</div>
+    </div>
+    <div class="flex flex-row">
+        <p>
+        <p class="w-25">CPU: </p>
+        {{ .CPUUsage.ModelName }}
+        </p>
+    </div>
+    <div class="flex flex-row">
+        <p class="">
+        <p class="w-25">RAM: </p>
+        {{ .RAMUsage.UsedMem }} / {{ .RAMUsage.TotalMem }}
+        </p>
+    </div>
+    <div class="flex flex-row">
+        <p class="">
+        <p class="w-25">SWAP: </p>
+        {{ .RAMUsage.SwapUsed }} / {{ .RAMUsage.SwapTotal }}
+        </p>
+    </div>
+
 </div>
