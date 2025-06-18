@@ -1,0 +1,7 @@
+<div class="basic">
+    <p>Hostname: {{ .HostINFO.Hostname }} ({{ .HostINFO.Platform }})</p>
+    <p>CPU: {{ .CPUUsage.ModelName }} ({{ .CPUUsage.Vendor }}), Cores: {{ .CPUUsage.Cores }}/{{.CPUUsage.Threads}}, Usage: {{ printf "%.1f"
+        .CPUUsage.Usage }}%</p>
+    <p>RAM: {{ .RAMUsage.UsedMem }} used / {{ .RAMUsage.TotalMem }} total, Swap used: {{ .RAMUsage.SwapUsed }}</p>
+    
+</div>
