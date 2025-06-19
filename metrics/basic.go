@@ -1,7 +1,10 @@
 package metrics
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/shirou/gopsutil/v4/cpu"
 	"github.com/shirou/gopsutil/v4/host"
@@ -30,8 +33,14 @@ func FormatBytes(bytes uint64) string {
 	}
 }
 
+type OS struct {
+	PrettyName string `json:"prettyName"`
+	ID         string `json:"id"`
+}
+
 type HostINFO struct {
 	Hostname string `json:"hostname"`
+	OS       OS     `json:"OS"`
 	Platform string `json:"platform"`
 	Uptime   int    `json:"uptime"`
 }
@@ -67,11 +76,17 @@ func GetBasicMetrics() BasicMetrics {
 	cpuThreads, _ := cpu.Counts(true)
 	cpuInfo, _ := cpu.Info()
 	hostInfo, _ := host.Info()
+	os, err := getLinuxDistro()
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
 	hostInfoS := HostINFO{
 		Hostname: hostInfo.Hostname,
 		Platform: hostInfo.Platform,
 		Uptime:   int(hostInfo.Uptime),
+		OS:       os,
 	}
 
 	cpuInfoS := CPUInfo{
@@ -102,4 +117,33 @@ func GetBasicMetrics() BasicMetrics {
 	}
 
 	return metrics
+}
+
+func getLinuxDistro() (OS, error) {
+	file, err := os.Open("/etc/os-release")
+	if err != nil {
+		return OS{}, err
+	}
+	defer file.Close()
+
+	osS := OS{}
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if strings.HasPrefix(line, "PRETTY_NAME=") {
+			// return strings.Trim(line[13:], `"`), nil
+			osS.PrettyName = strings.Trim(line[13:], `"`)
+		}
+
+		if strings.HasPrefix(line, "ID=") {
+			id := strings.TrimPrefix(line, "ID=")
+			id = strings.Trim(id, `"`) // remove surrounding quotes
+
+			osS.ID = id
+		}
+	}
+
+	return osS, nil
 }

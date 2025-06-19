@@ -24,6 +24,10 @@ func GetDisksMetrics() DisksMetrics {
 
 	partitions, _ := disk.Partitions(false)
 	for _, p := range partitions {
+		path := p.Mountpoint
+		if path == "/etc/hosts" || path == "/etc/hostname" || path == "/etc/resolv.conf" {
+			continue
+		}
 
 		part, err := disk.Usage(p.Mountpoint)
 		if err != nil {

@@ -10,6 +10,11 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+type Basic struct {
+	IconURL string `json:"iconURL"`
+	Metrics metrics.BasicMetrics
+}
+
 func MetricsHandler() http.Handler {
 	router := chi.NewRouter()
 
@@ -21,8 +26,16 @@ func MetricsHandler() http.Handler {
 	router.Get("/basic", func(w http.ResponseWriter, r *http.Request) {
 		metrics := metrics.GetBasicMetrics()
 
+		basic := Basic{}
+
+		if metrics.HostINFO.OS.ID != "" {
+			basic.IconURL = getIcon(metrics.HostINFO.OS.ID)
+		}
+
+		basic.Metrics = metrics
+
 		tmpl := template.Must(template.ParseFiles("templates/basic.html"))
-		tmpl.Execute(w, metrics)
+		tmpl.Execute(w, basic)
 	})
 
 	router.Get("/disksJSON", func(w http.ResponseWriter, r *http.Request) {
@@ -42,4 +55,17 @@ func MetricsHandler() http.Handler {
 	})
 
 	return router
+}
+
+func getIcon(osId string) string {
+	iconMap := map[string]string{
+		"ubuntu": "/static/icons/ubuntu.svg",
+		"debian": "/static/icons/debian.svg",
+		"fedora": "/static/icons/fedora.svg",
+		"arch":   "/static/icons/arch.svg",
+		"alpine": "/static/icons/alpine.svg",
+		"pop":    "/static/icons/pop-os.svg", // <- add this
+	}
+
+	return iconMap[osId]
 }

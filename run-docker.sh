@@ -1,0 +1,1 @@
+sudo docker build -t psutil-agent . && sudo docker run --hostname psutil-agent-docker -p 3000:3000 psutil-agent
