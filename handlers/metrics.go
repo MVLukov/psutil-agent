@@ -59,13 +59,34 @@ func MetricsHandler() http.Handler {
 
 func getIcon(osId string) string {
 	iconMap := map[string]string{
-		"ubuntu": "/static/icons/ubuntu.svg",
-		"debian": "/static/icons/debian.svg",
-		"fedora": "/static/icons/fedora.svg",
-		"arch":   "/static/icons/arch.svg",
-		"alpine": "/static/icons/alpine.svg",
-		"pop":    "/static/icons/pop-os.svg", // <- add this
+		"ubuntu":             "/static/icons/ubuntu.svg",
+		"pop":                "/static/icons/pop-os.svg",
+		"pop-os":             "/static/icons/pop-os.svg",
+		"popos":              "/static/icons/popos.svg",
+		"debian":             "/static/icons/debian.svg",
+		"arch":               "/static/icons/arch.svg",
+		"archlinux":          "/static/icons/archlinux.svg",
+		"fedora":             "/static/icons/fedora.svg",
+		"manjaro":            "/static/icons/manjaro.svg",
+		"linuxmint":          "/static/icons/linuxmint.svg",
+		"linuxmint-cinnamon": "/static/icons/linuxmint-cinnamon.svg",
+		"kubuntu":            "/static/icons/kubuntu.svg",
+		"xubuntu":            "/static/icons/xubuntu.svg",
+		"zorin":              "/static/icons/zorin.svg",
+		"elementary":         "/static/icons/elementary.svg",
+		"opensuse":           "/static/icons/opensuse.svg",
+		"void":               "/static/icons/void.svg",
+		"gentoo":             "/static/icons/gentoo.svg",
+		"alpine":             "/static/icons/alpine.svg",
+		"centos":             "/static/icons/centos-stream.svg",
+		"nixos":              "/static/icons/nixos.svg",
+		"freebsd":            "/static/icons/freebsd.svg",
+		"windows":            "/static/icons/windows.svg",
 	}
 
-	return iconMap[osId]
+	if icon, ok := iconMap[osId]; ok {
+		return icon
+	}
+
+	return ""
 }
