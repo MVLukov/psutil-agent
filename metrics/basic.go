@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/shirou/gopsutil/v4/cpu"
 	"github.com/shirou/gopsutil/v4/host"
@@ -42,7 +43,7 @@ type HostINFO struct {
 	Hostname string `json:"hostname"`
 	OS       OS     `json:"OS"`
 	Platform string `json:"platform"`
-	Uptime   int    `json:"uptime"`
+	Uptime   string `json:"uptime"`
 }
 
 type MemoryINFO struct {
@@ -85,7 +86,7 @@ func GetBasicMetrics() BasicMetrics {
 	hostInfoS := HostINFO{
 		Hostname: hostInfo.Hostname,
 		Platform: hostInfo.Platform,
-		Uptime:   int(hostInfo.Uptime),
+		Uptime:   formatUptime(int(hostInfo.Uptime)),
 		OS:       os,
 	}
 
@@ -146,4 +147,12 @@ func getLinuxDistro() (OS, error) {
 	}
 
 	return osS, nil
+}
+
+func formatUptime(seconds int) string {
+	d := time.Duration(seconds) * time.Second
+	h := int(d.Hours())
+	m := int(d.Minutes()) % 60
+	s := int(d.Seconds()) % 60
+	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
 }

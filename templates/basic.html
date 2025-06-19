@@ -15,4 +15,8 @@
         <p>SWAP: </p>
         <p>{{ .Metrics.RAMUsage.SwapUsed }} / {{ .Metrics.RAMUsage.SwapTotal }}</p>
     </div>
+    <div class="grid grid-cols-[1fr_auto] gap-4">
+        <p>Uptime: </p>
+        <p>{{ .Metrics.HostINFO.Uptime }}</p>
+    </div>
 </div>
