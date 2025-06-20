@@ -6,6 +6,15 @@
         </div>
     </div>
     <div class="grid grid-cols-[1fr_auto] gap-4">
+        <p class="">OS: </p>
+        <p>{{ .Metrics.HostINFO.OS.PrettyName }}</p>
+    </div>
+    <div class="grid grid-cols-[1fr_auto] gap-4">
+        <p>Uptime: </p>
+        <p>{{ .Metrics.HostINFO.Uptime }}</p>
+    </div>
+    <hr class="my-1">
+    <div class="grid grid-cols-[1fr_auto] gap-4">
         <p class="">CPU: </p>
         <p>{{ .Metrics.CPUInfo.ModelName }} ({{.Metrics.CPUInfo.Cores}}/{{.Metrics.CPUInfo.Threads}})</p>
     </div>
@@ -16,9 +25,5 @@
     <div class="grid grid-cols-[1fr_auto] gap-4">
         <p>SWAP: </p>
         <p>{{ .Metrics.RAMInfo.SwapUsed }} / {{ .Metrics.RAMInfo.SwapTotal }}</p>
-    </div>
-    <div class="grid grid-cols-[1fr_auto] gap-4">
-        <p>Uptime: </p>
-        <p>{{ .Metrics.HostINFO.Uptime }}</p>
     </div>
 </div>
