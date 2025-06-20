@@ -169,7 +169,7 @@ func getOsType() (OS, error) {
 
 		return OS{
 			PrettyName: winName,
-			ID:         "windows",
+			ID:         strings.ToLower(winName),
 		}, nil
 	}
 

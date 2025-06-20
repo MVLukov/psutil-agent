@@ -81,7 +81,11 @@ func getIcon(osId string) string {
 		"centos":             "/static/icons/centos-stream.svg",
 		"nixos":              "/static/icons/nixos.svg",
 		"freebsd":            "/static/icons/freebsd.svg",
-		"windows":            "/static/icons/windows.svg",
+		"windows 7":          "/static/icons/windows-7.webp",
+		"windows 8":          "/static/icons/windows-8.png",
+		"windows 8.1":        "/static/icons/windows-8.png",
+		"windows 10":         "/static/icons/windows-10.webp",
+		"windows 11":         "/static/icons/windows-11.png",
 		"unknown":            "/static/icons/unknown.png",
 	}
 
