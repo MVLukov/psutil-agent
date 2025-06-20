@@ -23,7 +23,7 @@ func main() {
 	r.Mount("/api", handlers.MetricsHandler())
 	FileServer(r, "/static", http.Dir("./static"))
 
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe("0.0.0.0:3000", r)
 
 	// almost every return value is a struct
 
