@@ -5,6 +5,6 @@ package metrics
 
 import "fmt"
 
-func GetWindowsVersion() (string, error) {
-	return "", fmt.Errorf("GetWindowsVersion is only supported on Windows")
+func GetWindowsVersion() ([]string, error) {
+	return []string{}, fmt.Errorf("GetWindowsVersion is only supported on Windows")
 }

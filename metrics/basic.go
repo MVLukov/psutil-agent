@@ -162,14 +162,14 @@ func getOsType() (OS, error) {
 	osName := runtime.GOOS
 
 	if osName == "windows" {
-		winName, err := GetWindowsVersion()
+		windows, err := GetWindowsVersion()
 		if err != nil {
 			return OS{}, err
 		}
 
 		return OS{
-			PrettyName: winName,
-			ID:         strings.ToLower(winName),
+			PrettyName: fmt.Sprintf("%s %s (Build %d)", windows[0], windows[1]),
+			ID:         strings.ToLower(windows[0]),
 		}, nil
 	}
 
