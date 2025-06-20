@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 	"time"
 
@@ -66,8 +67,8 @@ type CPUInfo struct {
 
 type BasicMetrics struct {
 	HostINFO HostINFO   `json:"host"`
-	CPUUsage CPUInfo    `json:"cpu"`
-	RAMUsage MemoryINFO `json:"ram"`
+	CPUInfo  CPUInfo    `json:"cpu"`
+	RAMInfo  MemoryINFO `json:"ram"`
 }
 
 func GetBasicMetrics() BasicMetrics {
@@ -77,7 +78,7 @@ func GetBasicMetrics() BasicMetrics {
 	cpuThreads, _ := cpu.Counts(true)
 	cpuInfo, _ := cpu.Info()
 	hostInfo, _ := host.Info()
-	os, err := getLinuxDistro()
+	os, err := getOsType()
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -113,8 +114,8 @@ func GetBasicMetrics() BasicMetrics {
 
 	metrics := BasicMetrics{
 		HostINFO: hostInfoS,
-		CPUUsage: cpuInfoS,
-		RAMUsage: ram,
+		CPUInfo:  cpuInfoS,
+		RAMInfo:  ram,
 	}
 
 	return metrics
@@ -155,4 +156,39 @@ func formatUptime(seconds int) string {
 	m := int(d.Minutes()) % 60
 	s := int(d.Seconds()) % 60
 	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
+}
+
+func getOsType() (OS, error) {
+	osName := runtime.GOOS
+
+	if osName == "windows" {
+		winName, err := GetWindowsVersion()
+		if err != nil {
+			return OS{}, err
+		}
+
+		return OS{
+			PrettyName: winName,
+			ID:         "windows",
+		}, nil
+	}
+
+	if osName == "linux" {
+		osS, err := getLinuxDistro()
+		if err != nil {
+			fmt.Println(err)
+			return osS, err
+		}
+
+		return osS, nil
+	}
+
+	if osName == "darwin" {
+		return OS{
+			PrettyName: "unknown",
+			ID:         "unknown",
+		}, nil
+	}
+
+	return OS{}, nil
 }

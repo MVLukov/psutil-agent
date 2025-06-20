@@ -82,6 +82,7 @@ func getIcon(osId string) string {
 		"nixos":              "/static/icons/nixos.svg",
 		"freebsd":            "/static/icons/freebsd.svg",
 		"windows":            "/static/icons/windows.svg",
+		"unknown":            "/static/icons/unknown.png",
 	}
 
 	if icon, ok := iconMap[osId]; ok {
