@@ -1,19 +1,21 @@
 <div class="flex flex-col flex-nowrap bg-zinc-800 my-2 min-w-120 rounded-sm p-2 shadow-mb text-white opacity-90">
-    <div class="grid grid-cols-[auto_1fr]  gap-4 text-white mb-4">
-        <img width="65px" height="65px" src="{{.IconURL}}" />
-        <p class="text-3xl font-bold text-center">{{.Metrics.HostINFO.Hostname}}</p>
+    <div class="flex relative text-white mb-4">
+        <img class="object-cover" width="65px" height="65px" src="{{.IconURL}}" />
+        <div class="absolute inset-0 flex justify-center items-center">
+            <p class="text-3xl font-bold text-center">{{.Metrics.HostINFO.Hostname}}</p>
+        </div>
     </div>
     <div class="grid grid-cols-[1fr_auto] gap-4">
         <p class="">CPU: </p>
-        <p>{{ .Metrics.CPUUsage.ModelName }} ({{.Metrics.CPUUsage.Cores}}/{{.Metrics.CPUUsage.Threads}})</p>
+        <p>{{ .Metrics.CPUInfo.ModelName }} ({{.Metrics.CPUInfo.Cores}}/{{.Metrics.CPUInfo.Threads}})</p>
     </div>
     <div class="grid grid-cols-[1fr_auto] gap-4">
         <p>RAM: </p>
-        <p>{{ .Metrics.RAMUsage.UsedMem }} / {{ .Metrics.RAMUsage.TotalMem }}</p>
+        <p>{{ .Metrics.RAMInfo.UsedMem }} / {{ .Metrics.RAMInfo.TotalMem }}</p>
     </div>
     <div class="grid grid-cols-[1fr_auto] gap-4">
         <p>SWAP: </p>
-        <p>{{ .Metrics.RAMUsage.SwapUsed }} / {{ .Metrics.RAMUsage.SwapTotal }}</p>
+        <p>{{ .Metrics.RAMInfo.SwapUsed }} / {{ .Metrics.RAMInfo.SwapTotal }}</p>
     </div>
     <div class="grid grid-cols-[1fr_auto] gap-4">
         <p>Uptime: </p>
