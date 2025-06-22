@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -39,17 +38,12 @@ func MetricsHandler() http.Handler {
 	})
 
 	router.Get("/disksJSON", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(metrics.GetDisksMetrics())
-
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(metrics.GetDisksMetrics())
 	})
 
 	router.Get("/disks", func(w http.ResponseWriter, r *http.Request) {
 		metrics := metrics.GetDisksMetrics()
-
-		fmt.Println(metrics)
-
 		tmpl := template.Must(template.ParseFiles("templates/disks.html"))
 		tmpl.Execute(w, metrics)
 	})

@@ -168,7 +168,7 @@ func getOsType() (OS, error) {
 		}
 
 		return OS{
-			PrettyName: fmt.Sprintf("%s %s (Build %d)", windows[0], windows[1]),
+			PrettyName: fmt.Sprintf("%s %s", windows[0], windows[1]),
 			ID:         strings.ToLower(windows[0]),
 		}, nil
 	}
